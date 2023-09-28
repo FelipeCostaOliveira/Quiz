@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
-    );
-  }
-}
+import 'QuizPage.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -16,18 +9,26 @@ class HomePage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
-          title: const Text('Quiz'),
+          centerTitle: true,
+          title: const Text(
+            'Quiz',
+            style: TextStyle(fontSize: 40),
+          ),
           iconTheme: const IconThemeData(color: Colors.white),
         ),
-        body: const Center(
+        body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              FlutterLogo(size: 300),
+              Image.asset('assets/images/logo.png'),
               ElevatedButton(
-                  onPressed:null,
-                  child: Text('Jogar', style: TextStyle(fontSize: 50),)),
-      
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/Quiz');
+                  },
+                  child: Text(
+                    'Jogar',
+                    style: TextStyle(fontSize: 50),
+                  )),
             ],
           ),
         ));
