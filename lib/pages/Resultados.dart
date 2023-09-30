@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'QuizPage.dart';
 
+class Argumentos {
+  int acertos = 0;
+  Argumentos(this.acertos);
+}
+
 class Resultados extends StatelessWidget {
-  const Resultados({Key? key, required this.acertos }) : super(key: key);
-  final int acertos;
+  static const routename = 'Resultado';
+  const Resultados({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
+    final argumentos = ModalRoute.of(context)?.settings.arguments as Argumentos;
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
@@ -26,7 +33,7 @@ class Resultados extends StatelessWidget {
                 style: TextStyle(fontSize: 50),
               ),
               Text(
-                'Você acertou\n$acertos de 10\nperguntas',
+                'Você acertou\n${argumentos.acertos} de 10\nperguntas',
                 style: TextStyle(fontSize: 40),
               ),
               SizedBox(
