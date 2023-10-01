@@ -17,13 +17,13 @@ class _QuizState extends State<Quiz> {
 
   @override
   Widget build(BuildContext context) {
-    // quiz.shuffle();
+
     quiz.forEach((elemento) {
       int alternativa_correta = elemento['alternativa_certa'];
       List respostas = elemento['respostas'];
       String reposta_certa = elemento['respostas'][alternativa_correta - 1];
 
-      respostas.shuffle();
+      quiz.shuffle();
       int i = 1;
 
       respostas.forEach((elemento) {
@@ -71,20 +71,42 @@ class _QuizState extends State<Quiz> {
         centerTitle: true,
         title: const Text(
           'Quiz',
-          style: TextStyle(fontSize: 40),
+          style: TextStyle(fontSize: 40, color: Colors.white),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Padding(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+                Color.fromARGB(255, 7, 9, 146),
+                Color.fromARGB(255, 68, 112, 243),
+                Color.fromARGB(143, 156, 147, 238),
+            ],
+          ),
+        ),
         padding: const EdgeInsets.all(20.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Align(
               alignment: Alignment.topLeft,
-              child: Text('Pergunta $perguntaNumero de ${quiz.length}'),
+              child: Text(
+                'Pergunta $perguntaNumero de ${quiz.length}',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+                ),
             ),
-            Text('Pergunta:\n\n ' + quiz[perguntaNumero - 1]['pergunta']),
+            Text('Pergunta:\n\n ' + quiz[perguntaNumero - 1]['pergunta'], 
+            style: TextStyle(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+              ),
+            ),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
@@ -94,9 +116,12 @@ class _QuizState extends State<Quiz> {
                         respondeu(1);
                       },
                 child: Text(
-                  quiz[perguntaNumero - 1]['respostas'][0],
-                  style: TextStyle(fontSize: 40),
-                ),
+                    quiz[perguntaNumero - 1]['respostas'][0],
+                    style: TextStyle(fontSize: 50, color: Colors.white), 
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 0, 0, 0)), // Cor de fundo desejada
+                  ),
               ),
             ),
             SizedBox(
@@ -107,10 +132,13 @@ class _QuizState extends State<Quiz> {
                     : () {
                         respondeu(2);
                       },
-                child: Text(
-                  quiz[perguntaNumero - 1]['respostas'][1],
-                  style: TextStyle(fontSize: 40),
-                ),
+                 child: Text(
+                    quiz[perguntaNumero - 1]['respostas'][1],
+                    style: TextStyle(fontSize: 50, color: Colors.white), 
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 0, 0, 0)), // Cor de fundo desejada
+                  ),
               ),
             ),
             SizedBox(
@@ -122,9 +150,12 @@ class _QuizState extends State<Quiz> {
                         respondeu(3);
                       },
                 child: Text(
-                  quiz[perguntaNumero - 1]['respostas'][2],
-                  style: TextStyle(fontSize: 40),
-                ),
+                    quiz[perguntaNumero - 1]['respostas'][2],
+                    style: TextStyle(fontSize: 50, color: Colors.white), 
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 0, 0, 0)), // Cor de fundo desejada
+                  ),
               ),
             ),
             SizedBox(
@@ -136,9 +167,12 @@ class _QuizState extends State<Quiz> {
                         respondeu(4);
                       },
                 child: Text(
-                  quiz[perguntaNumero - 1]['respostas'][3],
-                  style: TextStyle(fontSize: 40),
-                ),
+                    quiz[perguntaNumero - 1]['respostas'][3],
+                    style: TextStyle(fontSize: 50, color: Colors.white), 
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 0, 0, 0)), // Cor de fundo desejada
+                  ),
               ),
             ),
           ],
@@ -148,10 +182,4 @@ class _QuizState extends State<Quiz> {
   }
 }
 
-void main() {
-  runApp(
-    MaterialApp(
-      home: Quiz(),
-    ),
-  );
-}
+
