@@ -10,39 +10,18 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  int perguntaNumero = 1;
+  int perguntaNumero = 0; // Iniciar com 0 para acessar a primeira pergunta corretamente
   int acertos = 0;
   int erros = 0;
-  bool quizConcluido = false; // Variável para controlar se o quiz foi concluído
+  bool quizConcluido = false;
 
   @override
   Widget build(BuildContext context) {
-
-    quiz.forEach((elemento) {
-      int alternativa_correta = elemento['alternativa_certa'];
-      List respostas = elemento['respostas'];
-      String reposta_certa = elemento['respostas'][alternativa_correta - 1];
-
-      quiz.shuffle();
-      int i = 1;
-
-      respostas.forEach((elemento) {
-        // print(elemento);
-        if (elemento == reposta_certa) {
-          alternativa_correta = i;
-        }
-        i++;
-      });
-      elemento['alternativa_certa'] = alternativa_correta;
-    });
-
     void respondeu(int respostaNumero) {
-      setState(() {
-        if (!quizConcluido) {
-          // Verifica se o quiz ainda não foi concluído
-          if (perguntaNumero <= quiz.length) {
-            if (quiz[perguntaNumero - 1]['alternativa_certa'] ==
-                respostaNumero) {
+      if (!quizConcluido) {
+        setState(() {
+          if (perguntaNumero < quiz.length) {
+            if (quiz[perguntaNumero]['alternativa_certa'] == respostaNumero) {
               print('acertou');
               acertos++;
             } else {
@@ -52,7 +31,7 @@ class _QuizState extends State<Quiz> {
 
             print('acertos totais: $acertos\nerros totais: $erros');
 
-            if (perguntaNumero == quiz.length) {
+            if (perguntaNumero == quiz.length - 1) {
               print('terminou o quiz');
               quizConcluido = true;
               Navigator.pushNamed(context, 'Resultado',
@@ -61,13 +40,13 @@ class _QuizState extends State<Quiz> {
               perguntaNumero++;
             }
           }
-        }
-      });
+        });
+      }
     }
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.black,
+        backgroundColor: Color.fromARGB(216, 0, 31, 207),
         centerTitle: true,
         title: const Text(
           'Quiz',
@@ -81,9 +60,9 @@ class _QuizState extends State<Quiz> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-                Color.fromARGB(255, 7, 9, 146),
-                Color.fromARGB(255, 68, 112, 243),
-                Color.fromARGB(143, 156, 147, 238),
+              Color.fromARGB(255, 7, 9, 146),
+              Color.fromARGB(255, 68, 112, 243),
+              Color.fromARGB(143, 156, 147, 238),
             ],
           ),
         ),
@@ -94,92 +73,45 @@ class _QuizState extends State<Quiz> {
             Align(
               alignment: Alignment.topLeft,
               child: Text(
-                'Pergunta $perguntaNumero de ${quiz.length}',
-                style: TextStyle(
+                'Pergunta ${perguntaNumero + 1} de ${quiz.length}',
+                style: const TextStyle(
                   fontSize: 28,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.white30,
+                
                 ),
+              ),
+            ),
+            Text(
+              'Pergunta:\n\n ' + quiz[perguntaNumero]['pergunta'],
+              style: const TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            for (var i = 0; i < quiz[perguntaNumero]['respostas'].length; i++)
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: quizConcluido
+                      ? null
+                      : () {
+                          respondeu(i);
+                        },
+                  child: Text(
+                    quiz[perguntaNumero]['respostas'][i],
+                    style: TextStyle(fontSize: 50, color: Colors.white),
+                  ),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        Color.fromARGB(50, 0, 162, 255)),
+                  ),
                 ),
-            ),
-            Text('Pergunta:\n\n ' + quiz[perguntaNumero - 1]['pergunta'], 
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
               ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: quizConcluido
-                    ? null
-                    : () {
-                        respondeu(1);
-                      },
-                child: Text(
-                    quiz[perguntaNumero - 1]['respostas'][0],
-                    style: TextStyle(fontSize: 50, color: Colors.white), 
-                  ),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 0, 0, 0)), // Cor de fundo desejada
-                  ),
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: quizConcluido
-                    ? null
-                    : () {
-                        respondeu(2);
-                      },
-                 child: Text(
-                    quiz[perguntaNumero - 1]['respostas'][1],
-                    style: TextStyle(fontSize: 50, color: Colors.white), 
-                  ),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 0, 0, 0)), // Cor de fundo desejada
-                  ),
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: quizConcluido
-                    ? null
-                    : () {
-                        respondeu(3);
-                      },
-                child: Text(
-                    quiz[perguntaNumero - 1]['respostas'][2],
-                    style: TextStyle(fontSize: 50, color: Colors.white), 
-                  ),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 0, 0, 0)), // Cor de fundo desejada
-                  ),
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: quizConcluido
-                    ? null
-                    : () {
-                        respondeu(4);
-                      },
-                child: Text(
-                    quiz[perguntaNumero - 1]['respostas'][3],
-                    style: TextStyle(fontSize: 50, color: Colors.white), 
-                  ),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 0, 0, 0)), // Cor de fundo desejada
-                  ),
-              ),
-            ),
           ],
         ),
       ),
     );
   }
 }
-
-

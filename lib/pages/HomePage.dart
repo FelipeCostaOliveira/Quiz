@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.black,
+          backgroundColor: Color.fromARGB(216, 0, 31, 207),
           centerTitle: true,
           title: const Text(
             'Quiz',
@@ -42,7 +42,7 @@ class HomePage extends StatelessWidget {
                       style: TextStyle(fontSize: 50, color: Colors.white), 
                     ),
                      style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(255, 0, 0, 0)), // Cor de fundo desejada
+                        backgroundColor: MaterialStateProperty.all<Color>(Color.fromARGB(19, 0, 153, 255)), // Cor de fundo desejada
                       ),
                     
                 ),
