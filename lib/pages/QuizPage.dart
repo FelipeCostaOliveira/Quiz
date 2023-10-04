@@ -122,13 +122,14 @@ class _QuizState extends State<Quiz> {
                   ),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(
+                      
                       (states) {
                         if (states.contains(MaterialState.pressed) &&
                             quiz[perguntaNumero]['alternativa_certa'] == i) {
-                              return Colors.green;
+                              return Color.fromARGB(255, 16, 189, 0);
                         } else if (states.contains(MaterialState.pressed) &&
                             quiz[perguntaNumero]['alternativa_certa'] != i) {
-                          return Colors.red;
+                          return const Color.fromARGB(255, 221, 18, 3);
                         } else {
                           return Color.fromARGB(50, 0, 162, 255);
                         }

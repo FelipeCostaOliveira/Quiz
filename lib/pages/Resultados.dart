@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'QuizPage.dart';
+import 'package:fl_chart/fl_chart.dart';
+import 'package:quiz/pages/QuizPage.dart';
 
 class Argumentos {
   int acertos = 0;
@@ -16,6 +17,13 @@ class Resultados extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as Argumentos?;
 
     if (argumentos != null) {
+      final totalPerguntas = 10;
+      final acertos = argumentos.acertos;
+      final erros = totalPerguntas - acertos;
+      final acertosPorcentagem =
+          (acertos / totalPerguntas * 100).toInt();
+      final errosPorcentagem = (erros / totalPerguntas * 100).toInt();
+
       return Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromARGB(216, 0, 31, 207),
@@ -45,24 +53,73 @@ class Resultados extends StatelessWidget {
               const Text(
                 'Resultado',
                 style: TextStyle(
-                  fontSize: 50,               
+                  fontSize: 50,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  
-              ),
-                
-              ),
-              Text(
-                'Você acertou\n${argumentos.acertos} de 10\nperguntas',
-                style: const TextStyle(
-                  fontSize: 40,
-                  color: Colors.white60
                 ),
-                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 1),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center, // Alinhe os widgets verticalmente ao centro
+                crossAxisAlignment: CrossAxisAlignment.center, // Alinhe os widgets horizontalmente ao centro
+                children: [
+                  Text(
+                    'Acertos: $acertos' ,
+                    style: const TextStyle(
+                      fontSize: 40,
+                      color: Color.fromARGB(255, 60, 255, 0),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    'Erros: $acertos' ,
+                    style: const TextStyle(
+                      fontSize: 40,
+                      color: Color.fromARGB(204, 255, 0, 0),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+              SizedBox(width: 1),
+              // Gráfico de pizza aqui
+              Container(
+                margin: EdgeInsets.only(top: 0),
+                width: 300, // Set the desired width
+                height: 300, // Set the desired height
+                child: PieChart(
+                  PieChartData(
+                    sections: [
+                      PieChartSectionData(
+                        color: Color.fromARGB(255, 60, 255, 0),// Cor para acertos
+                        value: acertos.toDouble(),
+                        title: '$acertosPorcentagem%',
+                        radius: 80,
+                        titleStyle: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      PieChartSectionData(
+                        color: Color.fromARGB(204, 255, 0, 0), // Cor para erros
+                        value: erros.toDouble(), // Total de perguntas - acertos
+                        title: '$errosPorcentagem%',
+                        radius: 80,
+                        titleStyle: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                    sectionsSpace: 0, //espaço entre as seções
+                    centerSpaceRadius: 0, //espaço no centro
+                    startDegreeOffset: 90, //define em qual grau passa a linha
+                  ),
+                ),
               ),
               SizedBox(
                 width: double.infinity,
-                height: 60, // Aumentei a altura do botão
+                height: 60,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
