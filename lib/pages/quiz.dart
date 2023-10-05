@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quiz/pages/Resultados.dart';
+import 'package:quiz/pages/resultados.dart';
 import 'package:quiz/pages/dados.dart';
 //import 'dart:math';
 
@@ -11,8 +11,7 @@ class Quiz extends StatefulWidget {
 }
 
 class _QuizState extends State<Quiz> {
-  int perguntaNumero =
-      0; // Iniciar com 0 para acessar a primeira pergunta corretamente
+  int perguntaNumero = 0; 
   int acertos = 0;
   int erros = 0;
   bool quizConcluido = false;
@@ -24,32 +23,32 @@ class _QuizState extends State<Quiz> {
       quiz.shuffle();
       var pergunta = quiz[perguntaNumero]['pergunta'];
       if (feito.contains(pergunta)) {
-        print('igual');
         while (feito.contains(pergunta)) {
           quiz.shuffle();
           pergunta = quiz[perguntaNumero]['pergunta'];
         }
       }
       feito.add(pergunta);
-      print(feito);
     });
+  }
+
+  void questao(respostaNumero) {
+    if (quiz[perguntaNumero]['alternativa_certa'] == respostaNumero) {
+      acertos++;
+    } else {
+      erros++;
+    }
   }
 
   void respondeu(int respostaNumero) {
     if (!quizConcluido) {
       setState(() {
         if (perguntaNumero < quiz.length - 1) {
-          if (quiz[perguntaNumero]['alternativa_certa'] == respostaNumero) {
-            print('acertou');
-            acertos++;
-          } else {
-            print('errou');
-            erros++;
-          }
+          questao(respostaNumero);
           perguntaNumero++;
           repetida();
         } else {
-          print('terminou o quiz');
+          questao(respostaNumero);
           quizConcluido = true;
           Navigator.pushNamed(context, 'Resultado',
               arguments: Argumentos(acertos));
@@ -60,17 +59,39 @@ class _QuizState extends State<Quiz> {
 
   @override
   Widget build(BuildContext context) {
+    quiz.forEach((elemento) {
+      int alternativaCorreta = elemento['alternativa_certa'];
+      List respostas = elemento['respostas'];
+
+      String respostaCerta = elemento['respostas'][alternativaCorreta];
+
+      respostas.shuffle();
+      int i = 0;
+      respostas.forEach((elemento) {
+        if (elemento == respostaCerta) {
+          alternativaCorreta = i;
+        }
+        i++;
+      });
+      elemento['alternativa_certa'] = alternativaCorreta;
+    });
     var pergunta = quiz[perguntaNumero]['pergunta'];
     var resposta = quiz[perguntaNumero]['respostas'];
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(216, 0, 31, 207),
+        backgroundColor: const Color.fromARGB(186, 0, 0, 0),
         centerTitle: true,
         title: const Text(
           'Quiz',
           style: TextStyle(fontSize: 40, color: Colors.white),
         ),
         iconTheme: const IconThemeData(color: Colors.white),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back), 
+          onPressed: () {
+            Navigator.pop(context); 
+          },
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -78,9 +99,9 @@ class _QuizState extends State<Quiz> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromARGB(255, 7, 9, 146),
-              Color.fromARGB(255, 68, 112, 243),
-              Color.fromARGB(143, 156, 147, 238),
+              Color.fromARGB(255, 22, 23, 29),
+              Color.fromARGB(255, 44, 44, 53),
+              Color.fromARGB(143, 58, 57, 63),
             ],
           ),
         ),
@@ -116,25 +137,24 @@ class _QuizState extends State<Quiz> {
                       : () {
                           respondeu(i);
                         },
-                  child: Text(
-                    quiz[perguntaNumero]['respostas'][i],
-                    style: TextStyle(fontSize: 40, color: Colors.white),
-                  ),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                      
                       (states) {
                         if (states.contains(MaterialState.pressed) &&
                             quiz[perguntaNumero]['alternativa_certa'] == i) {
-                              return Color.fromARGB(255, 16, 189, 0);
+                          return const Color.fromARGB(255, 16, 189, 0);
                         } else if (states.contains(MaterialState.pressed) &&
                             quiz[perguntaNumero]['alternativa_certa'] != i) {
                           return const Color.fromARGB(255, 221, 18, 3);
                         } else {
-                          return Color.fromARGB(50, 0, 162, 255);
+                          return const Color.fromARGB(69, 101, 101, 102);
                         }
                       },
                     ),
+                  ),
+                  child: Text(
+                    quiz[perguntaNumero]['respostas'][i],
+                    style: const TextStyle(fontSize: 40, color: Colors.white),
                   ),
                 ),
               ),

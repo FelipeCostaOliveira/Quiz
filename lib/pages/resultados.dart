@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:quiz/pages/QuizPage.dart';
+import 'package:quiz/pages/quiz.dart';
 
 class Argumentos {
   int acertos = 0;
@@ -17,22 +17,28 @@ class Resultados extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as Argumentos?;
 
     if (argumentos != null) {
-      final totalPerguntas = 10;
+      const totalPerguntas = 10;
       final acertos = argumentos.acertos;
-      final erros = totalPerguntas - acertos;
+      final erros = 10 - acertos;
       final acertosPorcentagem =
           (acertos / totalPerguntas * 100).toInt();
-      final errosPorcentagem = (erros / totalPerguntas * 100).toInt();
+     final errosPorcentagem = (erros / totalPerguntas * 100).toInt();
 
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(216, 0, 31, 207),
+          backgroundColor: const Color.fromARGB(186, 0, 0, 0),
           centerTitle: true,
           title: const Text(
             'Quiz',
             style: TextStyle(fontSize: 40, color: Colors.white),
           ),
           iconTheme: const IconThemeData(color: Colors.white),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back), 
+            onPressed: () {
+              Navigator.pop(context); // Retorna à página anterior
+            },
+          ),
         ),
         body: Container(
           decoration: const BoxDecoration(
@@ -40,9 +46,9 @@ class Resultados extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Color.fromARGB(255, 7, 9, 146),
-                Color.fromARGB(255, 68, 112, 243),
-                Color.fromARGB(143, 156, 147, 238),
+                Color.fromARGB(255, 22, 23, 29),
+                Color.fromARGB(255, 44, 44, 53),
+                Color.fromARGB(143, 58, 57, 63),
               ],
             ),
           ),
@@ -60,14 +66,14 @@ class Resultados extends StatelessWidget {
               ),
               
               Column(
-                mainAxisAlignment: MainAxisAlignment.center, // Alinhe os widgets verticalmente ao centro
-                crossAxisAlignment: CrossAxisAlignment.center, // Alinhe os widgets horizontalmente ao centro
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center, 
                 children: [
                   Text(
                     'Acertos: $acertos' ,
                     style: const TextStyle(
                       fontSize: 40,
-                      color: Color.fromARGB(255, 60, 255, 0),
+                      color: Color.fromARGB(179, 60, 255, 0),
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -75,46 +81,46 @@ class Resultados extends StatelessWidget {
                     'Erros: $erros' ,
                     style: const TextStyle(
                       fontSize: 40,
-                      color: Color.fromARGB(204, 255, 0, 0),
+                      color: Color.fromARGB(246, 255, 0, 0),
                     ),
                     textAlign: TextAlign.center,
                   ),
                 ],
               ),
               Container(
-                margin: EdgeInsets.only(top: 0),
+                margin: const EdgeInsets.only(top: 0),
                 height: 200, 
                 child: PieChart(
                   PieChartData(
                     sections: [
                       PieChartSectionData(
-                        color: Color.fromARGB(255, 60, 255, 0),// Cor para acertos
+                        color: const Color.fromARGB(255, 60, 255, 0),
                         value: acertos.toDouble(),
                         title: '$acertosPorcentagem%',
-                        radius: 100,
-                        titleStyle: TextStyle(
-                          fontSize: 18,
+                        radius: 20,
+                        titleStyle: const TextStyle(
+                          fontSize: 10,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       PieChartSectionData(
-                        color: Color.fromARGB(204, 255, 0, 0), // Cor para erros
-                        value: erros.toDouble(), // Total de perguntas - acertos
+                        color: const Color.fromARGB(246, 255, 0, 0), 
+                        value: erros.toDouble(),
                         title: '$errosPorcentagem%',
-                        radius: 100,
-                        titleStyle: TextStyle(
-                          fontSize: 18,
+                        radius: 20,
+                        titleStyle: const TextStyle(
+                          fontSize: 10,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                     ],
                     sectionsSpace: 0, //espaço entre as seções
-                    centerSpaceRadius: 0, //espaço no centro
+                    centerSpaceRadius: 100, //espaço no centro
                     startDegreeOffset: 90, //define em qual grau passa a linha
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
                 height: 70,
@@ -122,18 +128,19 @@ class Resultados extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Quiz()),
+                      MaterialPageRoute(builder: (context) => const Quiz()),
                     );
                   },
-                  child: Text(
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      const Color.fromARGB(174, 122, 123, 124),
+                    ),
+                  ),
+                  child: const Text(
                     'Jogar Novamente',
                     style: TextStyle(fontSize: 40, color: Colors.white),
                   ),
-                  style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      Color.fromARGB(33, 0, 110, 255),
-                    ),
-                  ),
+                  
                 ),
               )
             ],
@@ -141,7 +148,7 @@ class Resultados extends StatelessWidget {
         ),
       );
     } else {
-      Navigator.pop(context); // Isso volta para a tela anterior
+      Navigator.pop(context);
       return Container();
     }
   }
