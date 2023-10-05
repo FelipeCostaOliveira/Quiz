@@ -58,7 +58,7 @@ class Resultados extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              SizedBox(height: 1),
+              
               Column(
                 mainAxisAlignment: MainAxisAlignment.center, // Alinhe os widgets verticalmente ao centro
                 crossAxisAlignment: CrossAxisAlignment.center, // Alinhe os widgets horizontalmente ao centro
@@ -72,7 +72,7 @@ class Resultados extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   Text(
-                    'Erros: $acertos' ,
+                    'Erros: $erros' ,
                     style: const TextStyle(
                       fontSize: 40,
                       color: Color.fromARGB(204, 255, 0, 0),
@@ -81,12 +81,9 @@ class Resultados extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(width: 1),
-              // Gráfico de pizza aqui
               Container(
                 margin: EdgeInsets.only(top: 0),
-                width: 300, // Set the desired width
-                height: 300, // Set the desired height
+                height: 200, 
                 child: PieChart(
                   PieChartData(
                     sections: [
@@ -94,7 +91,7 @@ class Resultados extends StatelessWidget {
                         color: Color.fromARGB(255, 60, 255, 0),// Cor para acertos
                         value: acertos.toDouble(),
                         title: '$acertosPorcentagem%',
-                        radius: 80,
+                        radius: 100,
                         titleStyle: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -104,7 +101,7 @@ class Resultados extends StatelessWidget {
                         color: Color.fromARGB(204, 255, 0, 0), // Cor para erros
                         value: erros.toDouble(), // Total de perguntas - acertos
                         title: '$errosPorcentagem%',
-                        radius: 80,
+                        radius: 100,
                         titleStyle: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -117,9 +114,10 @@ class Resultados extends StatelessWidget {
                   ),
                 ),
               ),
+              SizedBox(height: 20),
               SizedBox(
                 width: double.infinity,
-                height: 60,
+                height: 70,
                 child: ElevatedButton(
                   onPressed: () {
                     Navigator.push(
