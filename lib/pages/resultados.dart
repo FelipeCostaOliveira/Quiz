@@ -26,7 +26,7 @@ class Resultados extends StatelessWidget {
 
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: const Color.fromARGB(186, 0, 0, 0),
+          backgroundColor: Color.fromARGB(184, 0, 89, 255),
           centerTitle: true,
           title: const Text(
             'Quiz',
@@ -46,9 +46,9 @@ class Resultados extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Color.fromARGB(255, 22, 23, 29),
-                Color.fromARGB(255, 44, 44, 53),
-                Color.fromARGB(143, 58, 57, 63),
+                Color.fromARGB(255, 27, 61, 255),
+                Color.fromARGB(255, 88, 88, 255),
+                Color.fromARGB(143, 97, 150, 255),
               ],
             ),
           ),
@@ -133,7 +133,7 @@ class Resultados extends StatelessWidget {
                   },
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(
-                      const Color.fromARGB(174, 122, 123, 124),
+                      const Color.fromARGB(69, 75, 156, 248),
                     ),
                   ),
                   child: const Text(

@@ -13,9 +13,9 @@ class HomePage extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                  Color.fromARGB(255, 22, 23, 29),
-                  Color.fromARGB(255, 44, 44, 53),
-                  Color.fromARGB(143, 58, 57, 63),
+                  Color.fromARGB(255, 27, 61, 255),
+                  Color.fromARGB(255, 88, 88, 255),
+                  Color.fromARGB(143, 97, 150, 255),
                 ],
             ),
           ),
@@ -23,7 +23,7 @@ class HomePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Image.asset("assets/images/logo5.png"),
+                Image.asset("assets/images/logo.png"),
                 ElevatedButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/Quiz');

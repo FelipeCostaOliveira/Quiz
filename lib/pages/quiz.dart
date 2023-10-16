@@ -79,7 +79,7 @@ class _QuizState extends State<Quiz> {
     var resposta = quiz[perguntaNumero]['respostas'];
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color.fromARGB(186, 0, 0, 0),
+        backgroundColor: Color.fromARGB(184, 0, 89, 255),
         centerTitle: true,
         title: const Text(
           'Quiz',
@@ -99,9 +99,9 @@ class _QuizState extends State<Quiz> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromARGB(255, 22, 23, 29),
-              Color.fromARGB(255, 44, 44, 53),
-              Color.fromARGB(143, 58, 57, 63),
+              Color.fromARGB(255, 27, 61, 255),
+              Color.fromARGB(255, 88, 88, 255),
+              Color.fromARGB(143, 97, 150, 255),
             ],
           ),
         ),
@@ -116,7 +116,7 @@ class _QuizState extends State<Quiz> {
                 style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.normal,
-                  color: Colors.white30,
+                  color: Color.fromARGB(155, 255, 255, 255),
                 ),
               ),
             ),
@@ -147,7 +147,7 @@ class _QuizState extends State<Quiz> {
                             quiz[perguntaNumero]['alternativa_certa'] != i) {
                           return const Color.fromARGB(255, 221, 18, 3);
                         } else {
-                          return const Color.fromARGB(69, 101, 101, 102);
+                          return Color.fromARGB(69, 75, 156, 248);
                         }
                       },
                     ),
